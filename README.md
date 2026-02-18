@@ -18,8 +18,8 @@ A native Android app to search and request movies and TV shows from your [Jellys
 
 | | |
 |:---:|:---:|
-| <img src="https://photos.app.goo.gl/7miyC1vSGpo6UsmQ7" width="280" alt="Search results" /> | <img src="https://photos.app.goo.gl/zSwT3kmywaxJnjCK6" width="280" alt="Request sheet" /> |
-| <img src="https://photos.app.goo.gl/qDtegvybxukFZJqz5" width="280" alt="Login" /> | <img src="https://photos.app.goo.gl/PFQSFtwyWyU9KW9Z6" width="280" alt="Settings" /> |
+| <img src="https://image2url.com/r2/default/images/1771311477075-0350c6e5-8573-4e33-bd1c-7b90cd50fddc.png" width="280" alt="Search results" /> | <img src="https://image2url.com/r2/default/images/1771311459009-b52628f6-fa63-45e2-84dd-7e4a58caf472.png" width="280" alt="Request sheet" /> |
+| <img src="https://image2url.com/r2/default/images/1771311425575-8bea9fe4-a6c5-48a8-801e-ccdcfc9471f9.png" width="280" alt="Login" /> | <img src="https://image2url.com/r2/default/images/1771311490479-c4964e9b-ac14-4800-b31b-9e0a465d8994.png" width="280" alt="Settings" /> |
 
 ## Requirements
 
