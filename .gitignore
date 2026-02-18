@@ -1,0 +1,38 @@
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Gradle
+.gradle/
+build/
+
+# Local configuration
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Keystore (never commit)
+*.jks
+*.keystore
+
+# External native build
+.externalNativeBuild/
+.cxx/
+
+# Captures
+captures/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and misc
+*.log
+*.hprof
