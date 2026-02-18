@@ -8,6 +8,7 @@ import com.ecp.jellyseerrremote.data.RemoteMode
 import com.ecp.jellyseerrremote.data.SecurePrefs
 import com.ecp.jellyseerrremote.data.SearchResult
 import com.ecp.jellyseerrremote.repo.ConnectionResult
+import com.ecp.jellyseerrremote.repo.DiscoverCategory
 import com.ecp.jellyseerrremote.repo.JellyRepo
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -50,7 +51,11 @@ data class UiState(
     val searchQuery: String = "",
     val searchResults: List<SearchResult> = emptyList(),
     val searchStatus: SearchStatus = SearchStatus.IDLE,
-    val searchError: String = ""
+    val searchError: String = "",
+    // Discover (per-category first page)
+    val discoverData: Map<DiscoverCategory, List<SearchResult>> = emptyMap(),
+    val discoverLoading: Set<DiscoverCategory> = emptySet(),
+    val discoverError: String? = null
 )
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
@@ -70,6 +75,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     val requestResult: StateFlow<RequestResult?> = _requestResult
     private val minSearchChars = 2
     private val searchDebounceMs = 300L
+    private val discoverCache = mutableMapOf<DiscoverCategory, List<SearchResult>>()
 
     private fun loadInitialState(): UiState {
         return UiState(
@@ -297,6 +303,60 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun clearRequestResult() { _requestResult.value = null }
+
+    fun loadDiscoverCategory(category: DiscoverCategory) {
+        discoverCache[category]?.let { cached ->
+            _state.value = _state.value.copy(
+                discoverData = _state.value.discoverData + (category to cached),
+                discoverError = null
+            )
+            return
+        }
+        _state.value = _state.value.copy(
+            discoverLoading = _state.value.discoverLoading + category,
+            discoverError = null
+        )
+        viewModelScope.launch {
+            val baseUrl = _state.value.baseUsed.ifBlank { repo.resolveBaseUrl() }
+            if (baseUrl.isBlank()) {
+                _state.value = _state.value.copy(
+                    discoverLoading = _state.value.discoverLoading - category,
+                    discoverError = "Can't reach server"
+                )
+                return@launch
+            }
+            if (!_state.value.isAuthed && !hasAuthCookie()) {
+                _state.value = _state.value.copy(
+                    discoverLoading = _state.value.discoverLoading - category,
+                    discoverError = "Login required"
+                )
+                return@launch
+            }
+            repo.discover(baseUrl, category, 1)
+                .onSuccess { list ->
+                    discoverCache[category] = list
+                    _state.value = _state.value.copy(
+                        discoverData = _state.value.discoverData + (category to list),
+                        discoverLoading = _state.value.discoverLoading - category,
+                        discoverError = null
+                    )
+                }
+                .onFailure { e ->
+                    _state.value = _state.value.copy(
+                        discoverLoading = _state.value.discoverLoading - category,
+                        discoverError = e.message ?: "Discover failed"
+                    )
+                }
+        }
+    }
+
+    /** Load more pages for a category (e.g. for "See more" full list). */
+    suspend fun loadDiscoverCategoryPage(category: DiscoverCategory, page: Int): Result<List<SearchResult>> {
+        val baseUrl = _state.value.baseUsed.ifBlank { repo.resolveBaseUrl() }
+        if (baseUrl.isBlank()) return Result.failure(Exception("No server URL"))
+        if (!_state.value.isAuthed && !hasAuthCookie()) return Result.failure(Exception("Login required"))
+        return repo.discover(baseUrl, category, page)
+    }
 
     fun logout() {
         prefs.clearAuth()

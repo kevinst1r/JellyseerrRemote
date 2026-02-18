@@ -70,7 +70,8 @@ import com.ecp.jellyseerrremote.vm.SearchStatus
 fun SearchScreen(
     vm: MainViewModel,
     onOpenSettings: () -> Unit,
-    onOpenLogin: () -> Unit
+    onOpenLogin: () -> Unit,
+    onOpenDiscover: () -> Unit = {}
 ) {
     val s by vm.state.collectAsState()
     val requestResult by vm.requestResult.collectAsState()
@@ -128,7 +129,7 @@ fun SearchScreen(
             )
 
             when (s.searchStatus) {
-                SearchStatus.IDLE -> IdleContent()
+                SearchStatus.IDLE -> IdleContent(onOpenDiscover = onOpenDiscover)
                 SearchStatus.LOADING -> LoadingContent()
                 SearchStatus.RESULTS, SearchStatus.EMPTY -> ResultsContent(
                     results = s.searchResults,
@@ -238,18 +239,22 @@ private fun SearchBar(
 }
 
 @Composable
-private fun IdleContent() {
-    Box(
+private fun IdleContent(onOpenDiscover: () -> Unit) {
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(32.dp),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
             "Type to search",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+        androidx.compose.material3.FilledTonalButton(onClick = onOpenDiscover) {
+            Text("Discover")
+        }
     }
 }
 

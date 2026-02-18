@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import java.io.IOException
 
-/** Nested media info from Jellyseerr; status is typically int (4 = available in library). */
+/** Nested media info from Seerr; status is typically int (4 = available in library). */
 data class MediaInfoDto(
     @Json(name = "status") val status: Int? = null,
     @Json(name = "statusCode") val statusCode: Int? = null
@@ -32,7 +32,7 @@ sealed class SeasonsSpec {
     data class Some(val numbers: List<Int>) : SeasonsSpec()
 }
 
-/** Body for POST /api/v1/request (Jellyseerr/Seerr create request). */
+/** Body for POST /api/v1/request (Seerr create request). */
 data class CreateRequestDto(
     @Json(name = "mediaType") val mediaType: String,
     @Json(name = "mediaId") val mediaId: Int,
@@ -83,6 +83,14 @@ data class SearchResponseDto(
     @Json(name = "tv") val tv: List<SearchResultDto>? = null
 )
 
+/** Discover API response (Seerr uses page/totalPages/totalResults at top level). */
+data class DiscoverResponseDto(
+    @Json(name = "results") val results: List<SearchResultDto>? = null,
+    @Json(name = "page") val page: Int? = null,
+    @Json(name = "totalPages") val totalPages: Int? = null,
+    @Json(name = "totalResults") val totalResults: Int? = null
+)
+
 /** UI-friendly search result. */
 data class SearchResult(
     val id: String,
@@ -101,7 +109,7 @@ data class SearchResult(
 private fun SearchResultDto.isAvailable(): Boolean {
     val s = status ?: mediaInfo?.status ?: mediaInfo?.statusCode ?: return false
     return when (s) {
-        1, 2, 4 -> true   // Available / PartiallyAvailable in Jellyseerr/Overseerr enums
+        1, 2, 4 -> true   // Available / PartiallyAvailable in Seerr/Overseerr enums
         3, 5 -> false    // Pending, Declined/Failed
         else -> false
     }

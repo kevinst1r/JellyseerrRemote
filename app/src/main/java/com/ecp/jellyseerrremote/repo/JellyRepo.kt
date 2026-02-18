@@ -1,6 +1,7 @@
 package com.ecp.jellyseerrremote.repo
 
 import com.ecp.jellyseerrremote.data.CreateRequestDto
+import com.ecp.jellyseerrremote.data.DiscoverResponseDto
 import com.ecp.jellyseerrremote.data.RemoteMode
 import com.ecp.jellyseerrremote.data.SeasonsSpec
 import com.ecp.jellyseerrremote.data.SecurePrefs
@@ -12,6 +13,12 @@ import com.ecp.jellyseerrremote.net.Network
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Request
+
+enum class DiscoverCategory(val label: String) {
+    TRENDING("Trending"),
+    MOVIES("Popular Movies"),
+    TV("Popular TV")
+}
 
 data class ConnectionResult(
     val ok: Boolean,
@@ -137,7 +144,7 @@ class JellyRepo(private val prefs: SecurePrefs) {
         }
     }
 
-    /** Sign in with Jellyseerr email/password (local login). Saves session cookie to prefs on success. */
+    /** Sign in with Seerr email/password (local login). Saves session cookie to prefs on success. */
     suspend fun loginLocal(baseUrl: String, email: String, password: String): Result<Unit> = withContext(Dispatchers.IO) {
         val base = baseUrl.trim().trimEnd('/')
         if (base.isBlank()) return@withContext Result.failure(Exception("No server URL"))
@@ -184,6 +191,30 @@ class JellyRepo(private val prefs: SecurePrefs) {
                 (body.tv ?: emptyList())
             val results = list.map { it.toSearchResult() }
             Result.success(results)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /** Fetch discover list for a category. page is 1-based. */
+    suspend fun discover(baseUrl: String, category: DiscoverCategory, page: Int = 1): Result<List<SearchResult>> = withContext(Dispatchers.IO) {
+        if (baseUrl.isBlank()) return@withContext Result.failure(Exception("No server URL"))
+        val client = Network.buildOkHttp(prefs)
+        val api = Network.buildRetrofit(baseUrl, client).create(JellyApi::class.java)
+        try {
+            val resp = when (category) {
+                DiscoverCategory.TRENDING -> api.discoverTrending(page)
+                DiscoverCategory.MOVIES -> api.discoverMovies(page)
+                DiscoverCategory.TV -> api.discoverTv(page)
+            }
+            if (!resp.isSuccessful) {
+                return@withContext Result.failure(Exception("Discover failed: ${resp.code()}"))
+            }
+            val body = resp.body() ?: DiscoverResponseDto()
+            val raw = body.results ?: emptyList()
+            // Trending can include Person/Collection; only show movie/tv
+            val list = raw.filter { it.mediaType?.lowercase() in listOf("movie", "tv") }
+            Result.success(list.map { it.toSearchResult() })
         } catch (e: Exception) {
             Result.failure(e)
         }

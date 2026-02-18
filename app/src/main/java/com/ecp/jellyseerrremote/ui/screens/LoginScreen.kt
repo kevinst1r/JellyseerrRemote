@@ -93,7 +93,7 @@ fun LoginScreen(
                 Button(onClick = onDone) { Text("Back to Settings") }
             } else {
                 Text(
-                    "Sign in with your Jellyseerr email and password. Enable \"Password sign-in\" in Jellyseerr → Settings → Users if needed.",
+                    "Sign in with your Seerr email and password. Enable \"Password sign-in\" in Seerr → Settings → Users if needed.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

@@ -1,10 +1,10 @@
-# Jellyseerr Remote
+# Seerr Remote
 
-A native Android app to search and request movies and TV shows from your [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) instance—from your phone, on the same network or remotely.
+A native Android app to search and request movies and TV shows from your [Seerr](https://github.com/Fallenbagel/jellyseerr) instance—from your phone, on the same network or remotely.
 
-## What is Jellyseerr?
+## What is Seerr?
 
-[Jellyseerr](https://github.com/Fallenbagel/jellyseerr) is a request management tool for media servers (e.g. Plex, Jellyfin). Users search for content and submit requests; Jellyseerr can integrate with *arr stack apps for automation. This app is a lightweight mobile client for that workflow.
+[Seerr](https://github.com/Fallenbagel/jellyseerr) is a request management tool for media servers (e.g. Plex, Jellyfin). Users search for content and submit requests; Seerr can integrate with *arr stack apps for automation. This app is a lightweight mobile client for that workflow.
 
 ## Features
 
@@ -24,8 +24,8 @@ A native Android app to search and request movies and TV shows from your [Jellys
 ## Requirements
 
 - Android 8.0 (API 26) or higher
-- A running [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) instance
-- For remote access: a tunnel (e.g. Cloudflare) or a publicly reachable Jellyseerr URL
+- A running [Seerr](https://github.com/Fallenbagel/jellyseerr) instance
+- For remote access: a tunnel (e.g. Cloudflare) or a publicly reachable Seerr URL
 
 ## Build and run
 
@@ -51,7 +51,7 @@ Output: `app/build/outputs/apk/release/app-release-unsigned.apk` (sign with your
 
 1. Open **Settings** and set your **Local URL** (e.g. `http://192.168.1.50:5055`).
 2. Optionally enable **Remote** and set a Cloudflare Tunnel ID or a custom remote URL.
-3. Use **Login** to sign in with your Jellyseerr email/password (enable “Password sign-in” in Jellyseerr → Settings → Users if needed).
+3. Use **Login** to sign in with your Seerr email/password (enable “Password sign-in” in Seerr → Settings → Users if needed).
 4. The status dot (gray / yellow / green / red) shows connection and auth state.
 
 ## License
