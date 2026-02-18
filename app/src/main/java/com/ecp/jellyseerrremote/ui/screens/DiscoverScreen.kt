@@ -18,7 +18,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.ui.res.painterResource
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -48,6 +49,7 @@ import coil.compose.AsyncImage
 import com.ecp.jellyseerrremote.data.SearchResult
 import com.ecp.jellyseerrremote.ui.PosterUrl
 import com.ecp.jellyseerrremote.vm.MainViewModel
+import com.ecp.jellyseerrremote.R
 import com.ecp.jellyseerrremote.vm.RequestResult
 import com.ecp.jellyseerrremote.repo.DiscoverCategory
 
@@ -80,8 +82,11 @@ fun DiscoverScreen(
             TopAppBar(
                 title = { Text("Discover") },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
+                        Icon(
+                            painter = painterResource(R.drawable.back),
+                            contentDescription = "Back"
+                        )
                     }
                 }
             )
