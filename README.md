@@ -14,6 +14,16 @@ A native Android app to search and request movies and TV shows from your [Jellys
 - **Cloudflare Tunnel** — Optional built-in support for a trycloudflare.com tunnel ID.
 - **Secure storage** — Server URL and auth are stored using Android’s EncryptedSharedPreferences.
 
+## Screenshots
+
+| Search | Request |
+|--------|--------|
+| ![Search results](screenshots/1-search-results.png) | ![Request sheet](screenshots/2-request-sheet.png) |
+
+| Settings | Login |
+|----------|-------|
+| ![Settings](screenshots/3-settings.png) | ![Login](screenshots/4-login.png) |
+
 ## Requirements
 
 - Android 8.0 (API 26) or higher
