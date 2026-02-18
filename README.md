@@ -50,3 +50,7 @@ Output: `app/build/outputs/apk/release/app-release-unsigned.apk` (sign with your
 ## License
 
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+**AI disclosure:** This project was written primarily using Cursor.
