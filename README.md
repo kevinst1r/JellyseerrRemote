@@ -16,21 +16,10 @@ A native Android app to search and request movies and TV shows from your [Jellys
 
 ## Screenshots
 
-**Search** — Results with status (Requested, Available, etc.)
-
-![Search results](screenshots/1-search-results.png)
-
-**Request** — Tap a result to open the sheet and request.
-
-![Request sheet](screenshots/2-request-sheet.png)
-
-**Settings** — Local/remote URL, Cloudflare Tunnel, connection status.
-
-![Settings](screenshots/3-settings.png)
-
-**Login** — Sign in with Jellyseerr email/password.
-
-![Login](screenshots/4-login.png)
+| | |
+|:---:|:---:|
+| **[Search](https://photos.app.goo.gl/7miyC1vSGpo6UsmQ7)** — Results with status (Requested, Available, etc.) | **[Request sheet](https://photos.app.goo.gl/zSwT3kmywaxJnjCK6)** — Tap a result to open the sheet and request. |
+| **[Login](https://photos.app.goo.gl/qDtegvybxukFZJqz5)** — Sign in with Jellyseerr email/password. | **[Settings](https://photos.app.goo.gl/PFQSFtwyWyU9KW9Z6)** — Local/remote URL, Cloudflare Tunnel, connection status. |
 
 ## Requirements
 
