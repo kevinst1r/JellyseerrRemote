@@ -18,8 +18,8 @@ A native Android app to search and request movies and TV shows from your [Jellys
 
 | | |
 |:---:|:---:|
-| **[Search](https://photos.app.goo.gl/7miyC1vSGpo6UsmQ7)** — Results with status (Requested, Available, etc.) | **[Request sheet](https://photos.app.goo.gl/zSwT3kmywaxJnjCK6)** — Tap a result to open the sheet and request. |
-| **[Login](https://photos.app.goo.gl/qDtegvybxukFZJqz5)** — Sign in with Jellyseerr email/password. | **[Settings](https://photos.app.goo.gl/PFQSFtwyWyU9KW9Z6)** — Local/remote URL, Cloudflare Tunnel, connection status. |
+| <img src="https://photos.app.goo.gl/7miyC1vSGpo6UsmQ7" width="280" alt="Search results" /> | <img src="https://photos.app.goo.gl/zSwT3kmywaxJnjCK6" width="280" alt="Request sheet" /> |
+| <img src="https://photos.app.goo.gl/qDtegvybxukFZJqz5" width="280" alt="Login" /> | <img src="https://photos.app.goo.gl/PFQSFtwyWyU9KW9Z6" width="280" alt="Settings" /> |
 
 ## Requirements
 
